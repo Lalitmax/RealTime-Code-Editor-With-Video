@@ -1,7 +1,37 @@
-import React from 'react'
+'use client'
+import React, { useEffect } from 'react'
 import { FaCode } from "react-icons/fa6";
 
+import CodeMirror from 'codemirror';
+import 'codemirror/lib/codemirror.css';
+import 'codemirror/theme/xq-light.css'
+import 'codemirror/addon/edit/matchbrackets'; // Import bracket matching
+import 'codemirror/addon/edit/closebrackets'; // Import auto-closing brackets
+
+import 'codemirror/mode/javascript/javascript'; // Import the JavaScript mode
+
 const TextEditor = () => {
+    useEffect(() => {
+        const init = async () => {
+            const textarea = document.querySelector("#editor") as HTMLTextAreaElement | null;
+
+            if (textarea) {
+                const editor = CodeMirror.fromTextArea(textarea, {
+                    mode: { name: 'javascript', json: true },
+                    // theme: 'xq-light',
+                    autoCloseBrackets: true,
+                    matchBrackets: true,
+                    lineNumbers: true
+
+                })
+                editor.setSize(null, "100%")
+            }
+
+        }
+        init();
+
+    }, [])
+
     return (
         <>
             <div className=" absolute pl-2  p-r-4 h-10  dark:border-gray-700 flex items-center justify-between rounded-t-md bg-[#f7f7f7]  border-[1px] w-full " >
@@ -21,7 +51,7 @@ const TextEditor = () => {
             </div>
             <textarea
                 id="editor"
-                className="h-full w-full block px-4 text-sm text-gray-800 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400 resize-none pt-12"
+                className="h-full w-full block px-4  text-gray-800 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400 resize-none pt-12 text-3xl"
                 placeholder="Write here code..."
                 required
             ></textarea>
@@ -29,4 +59,4 @@ const TextEditor = () => {
         </>)
 }
 
-export default TextEditor
+export default TextEditor   
