@@ -11,16 +11,10 @@ import Terminal from "@/components/Terminal";
 import React, { useEffect, useRef, useState } from 'react'
 
 
-
-
 const Home = () => {
-
   const [leftBarWidthCounter, setLeftBarWidthCounter] = useState(100);
   const [rightBarWidthCounter, setRightBarWidthCounter] = useState(100);
-
   const [leftSidebarWidth, setLeftSidebarWidth] = useState(15);
-
-
   const checkWidthLeftBar = (size: number): void => {
     setLeftBarWidthCounter(size); // Set the percentage width
   }
@@ -28,6 +22,7 @@ const Home = () => {
     setRightBarWidthCounter(size); // Set the percentage width
   }
 
+ 
 
   return (<>
     <div className="h-full w-full pt-[68px] fixed">

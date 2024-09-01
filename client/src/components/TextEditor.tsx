@@ -34,7 +34,7 @@ const TextEditor = () => {
 
     return (
         <>
-            <div className=" absolute pl-2  p-r-4 h-10  dark:border-gray-700 flex items-center justify-between rounded-t-md bg-[#f7f7f7]  border-[1px] w-full " >
+            <div className="z-10 absolute pl-2  p-r-4 h-10  dark:border-gray-700 flex items-center justify-between rounded-t-md bg-[#f7f7f7]  border-[1px] w-full " >
                 <div className="flex flex-wrap items-center divide-gray-200 sm:divide-x sm:rtl:divide-x-reverse dark:divide-gray-600">
                     <FaCode className=' text-gray-600 text-xl' />
                 </div>
@@ -59,4 +59,4 @@ const TextEditor = () => {
         </>)
 }
 
-export default TextEditor   
+export default TextEditor
