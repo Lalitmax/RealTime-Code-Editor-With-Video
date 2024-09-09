@@ -10,7 +10,6 @@ import {
 import Terminal from "@/components/Terminal";
 import React, { useEffect, useRef, useState } from 'react'
 
-
 const Home = () => {
   const [leftBarWidthCounter, setLeftBarWidthCounter] = useState(100);
   const [rightBarWidthCounter, setRightBarWidthCounter] = useState(100);

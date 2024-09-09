@@ -1,8 +1,10 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { FaCodeMerge } from "react-icons/fa6";
 import { HiUserGroup } from "react-icons/hi";
 import { FaAnglesRight } from "react-icons/fa6";
+import socket from '@/lib/socket';
+import { JoinRoom } from './JoinRoom';
 
 
 type SideLeftBarProps = {
@@ -10,19 +12,20 @@ type SideLeftBarProps = {
 }
 
 const SideLeftBar: React.FC<SideLeftBarProps> = ({ width }) => {
-     const [sideBarHide, setSideBarHide] = useState(true)
- 
+    const [sideBarHide, setSideBarHide] = useState(true)
+   
     return (
         // <aside id="default-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
 
         <div className={`h-full pl-3 pr-6  pb-4   overflow-y-auto bg-white dark:bg-gray-800  rounded-md border `}>
+         
             {width > 10 ? <ul className="space-y-2 font-medium pt-2">
 
                 <li>
                     <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                         <FaCodeMerge className='text-2xl flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white' />
 
-                        <span className="ms-3">Join</span>
+                        <span className="ms-3"><JoinRoom/></span>
                     </a>
                 </li>
                 <li>
@@ -65,7 +68,7 @@ const SideLeftBar: React.FC<SideLeftBarProps> = ({ width }) => {
 
                     <a onClick={() => setSideBarHide(!sideBarHide)} href="#" className=" text-gray-900 rounded-md dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group w-10 flex items-center justify-center p-2 fixed left-2 top-[73px]">
 
-                        <FaAnglesRight  className='text-2xl flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white' />
+                        <FaAnglesRight className='text-2xl flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white' />
                     </a>
                     <FaCodeMerge className='text-2xl text-gray-600' />
                     <svg className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 18">
