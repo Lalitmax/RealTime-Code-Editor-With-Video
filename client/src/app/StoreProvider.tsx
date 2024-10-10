@@ -8,7 +8,7 @@ const StoreProvider = ({children} : {children:ReactNode})=> {
     const storeRef = useRef<AppStore>()
     if(!storeRef.current) {
         storeRef.current = makeStore();
-        storeRef.current.dispatch(setRoomName("Room"))
+        // storeRef.current.dispatch(setRoomName("Room"))
 
     }
     return <Provider store={storeRef.current}>{children}</Provider>;

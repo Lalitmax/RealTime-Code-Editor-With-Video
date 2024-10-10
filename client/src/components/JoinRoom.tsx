@@ -31,7 +31,7 @@ export function JoinRoom() {
     const joinRoomSubmit = (event : FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         dispatch(setRoomName({roomName : name}))
-        console.log(name);
+        socket.emit("joinRoom", name);
     }
 
 
@@ -39,7 +39,14 @@ export function JoinRoom() {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button variant="outline">Join</Button>
+            <button className="flex items-center justify-between px-4 py-2 rounded-md bg-blue-500 hover:bg-blue-600 text-white font-medium mb-2">
+                <div className="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 17V7m3-10H18M7 16h10m-3-11v12" />
+                    </svg>
+                    <span className="ml-2">Join</span>
+                </div>
+            </button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>

@@ -1,9 +1,9 @@
 import {configureStore} from '@reduxjs/toolkit'
-import joinRoomSlice from './slices/socket/joinRoomSlice';
+import joinRoom from './slices/socket/joinRoomSlice';
  
 export const makeStore = () => {
   return configureStore({
-    reducer: {joinRoomName : joinRoomSlice},
+    reducer: {joinRoom},
   })
 }
 

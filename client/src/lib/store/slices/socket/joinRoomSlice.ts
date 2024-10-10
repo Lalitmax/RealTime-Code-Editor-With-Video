@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const joinRoomSlice  = createSlice({
+const joinRoom  = createSlice({
     name : "Join Room",
     initialState : {roomName : ""},
     reducers : {
@@ -15,5 +15,5 @@ const joinRoomSlice  = createSlice({
     
 })
 
-export const {setRoomName, removeRoomName} = joinRoomSlice.actions;
-export default joinRoomSlice.reducer;
+export const {setRoomName, removeRoomName} = joinRoom.actions;
+export default joinRoom.reducer;

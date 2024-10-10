@@ -9,21 +9,20 @@ import 'codemirror/addon/edit/closebrackets';
 import 'codemirror/mode/javascript/javascript';
 import socket from '@/lib/socket';
 import { v4 as uuidv4 } from 'uuid';
-import { JoinRoom } from './JoinRoom';
+import { useAppSelector } from '@/lib/store/hooks';
 
 const TextEditor = () => {
 
   const [clientId] = useState<string>(uuidv4());
   const editorRef = useRef<CodeMirror.Editor | null>(null);
 
-  // Function to update room name
-  function setRoomNameHandle(rm: string) {
-    localStorage.setItem("roomName", rm)
-  }
+  const roomName = useAppSelector((state) => {
+    localStorage.setItem("roomName", state.joinRoom.roomName)
+  });
 
   useEffect(() => {
 
-    const handleChat = (payload) => {
+    const handleChat = (payload: { chat: string; clientId: string; }) => {
       if (payload.clientId !== clientId && editorRef.current) {
         const doc = editorRef.current.getDoc();
         if (payload.chat && typeof payload.chat === 'string') {
@@ -34,11 +33,12 @@ const TextEditor = () => {
       }
     };
 
-    const handleNewJoin = (payload) => {
+    const handleNewJoin = (payload:string) => {
       if (editorRef.current) {
+        console.log("chat comes from server: "+ payload)
         const doc = editorRef.current.getDoc();
-        if (payload.chat && typeof payload.chat === 'string') {
-          doc.setValue(payload.chat);
+        if(payload.length!=0) {
+          doc.setValue(payload);
         }
       }
     };
@@ -69,11 +69,10 @@ const TextEditor = () => {
         editorRef.current = editor;
         editor.setSize(null, '100%');
         editorRef.current.on("change", (instance, changes) => {
-          // console.log("changes", instance ,  changes );
+
           const { origin } = changes;
           const code = instance.getValue(); // code has value which we write
-          // handleEditorChange(code);
-
+  
           if (origin !== "setValue") {
               socket.emit('chat', { chat: code, roomName: localStorage.getItem("roomName"), clientId }); // Emit chat event
           }
@@ -93,7 +92,6 @@ const TextEditor = () => {
   return (
     <>
       
-      {/* <JoinRoom setRoomNameHandle={setRoomNameHandle} /> */}
       <div className="z-10 absolute pl-2 p-r-4 h-10 dark:border-gray-700 flex items-center justify-between rounded-t-md bg-[#f7f7f7] border-[1px] w-full">
         <div className="flex flex-wrap items-center divide-gray-200 sm:divide-x sm:rtl:divide-x-reverse dark:divide-gray-600">
           <FaCode className="text-gray-600 text-xl" />
