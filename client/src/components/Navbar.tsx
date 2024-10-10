@@ -1,7 +1,7 @@
 'use client'
 import React from 'react';
 import { useState } from 'react';
-
+import Image from 'next/image';
 import {
   Dialog,
   DialogContent,
@@ -15,7 +15,7 @@ import Link from 'next/link';
 import { CodeShareLink } from './CodeShareLink';
 const Navbar = () => {
   const [openCodeShareLink, setOpenCodeShareLink] = useState(false);
-   
+
   return (<>
     <nav className="fixed top-0 z-50 w-full bg-white  dark:bg-gray-800 dark:border-gray-700">
       <div className="px-3 py-3 lg:px-5 lg:pl-3">
@@ -28,7 +28,7 @@ const Navbar = () => {
               </svg>
             </button>
 
-            
+
             <a href="/" className="flex ms-2 md:me-24">
               <img src="./images/codelogo.png" className="h-10 me-3" alt="FlowBite Logo" />
               <span className="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">CodeMax</span>
@@ -37,14 +37,19 @@ const Navbar = () => {
           <div className="flex items-center">
             <div className="flex items-center gap-4 sm:gap-10">
               <div>
-              <CodeShareLink></CodeShareLink>
+                <CodeShareLink></CodeShareLink>
                 {/* <button onClick={() => setOpenCodeShareLink(!openCodeShareLink)} type="button" className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-full text-sm px-5 py-2 text-center me-2">Share</button> */}
               </div>
               <div>
                 <button type="button" className="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" aria-expanded="false" data-dropdown-toggle="dropdown-user">
                   <span className="sr-only">Open user menu</span>
-                  <img className="w-9 h-9 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user photo" />
-                </button>
+                  <Image
+                    className="w-9 h-9 rounded-full"
+                    src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
+                    alt="user photo"
+                    width={36}
+                    height={36}
+                  />                </button>
               </div>
               <div className="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600" id="dropdown-user">
                 <div className="px-4 py-3" role="none">
@@ -75,7 +80,7 @@ const Navbar = () => {
         </div>
       </div>
     </nav>
-    
+
 
   </>);
 };
