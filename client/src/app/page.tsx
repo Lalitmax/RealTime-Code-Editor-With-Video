@@ -1,13 +1,16 @@
 "use client";
-import SideLeftBar from "@/components/SideLeftBar";
-import SideRightBar from "@/components/SideRightBar";
-import TextEditor from "@/components/TextEditor";
+import dynamic from 'next/dynamic';
+
+const SideLeftBar = dynamic(() => import('@/components/SideLeftBar'), { ssr: false });
+const SideRightBar = dynamic(() => import('@/components/SideRightBar'), { ssr: false });
+const TextEditor = dynamic(() => import('@/components/TextEditor'), { ssr: false });
+const Terminal = dynamic(() => import('@/components/Terminal'), { ssr: false });
+
 import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable"
-import Terminal from "@/components/Terminal";
 import React, { useEffect, useRef, useState } from 'react'
 
 const Home = () => {

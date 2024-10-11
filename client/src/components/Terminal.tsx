@@ -1,7 +1,5 @@
 import React from 'react'
 import { PiTerminalBold } from "react-icons/pi";
-
-import Image from 'next/image'
 const Terminal = () => {
     return (
         <>
