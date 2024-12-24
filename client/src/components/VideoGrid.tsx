@@ -4,9 +4,7 @@ const VideoGrid = () => {
     return (
 
         <>
-            
-        
-
+            <div>VideoGrid</div>
         </>
 
     )

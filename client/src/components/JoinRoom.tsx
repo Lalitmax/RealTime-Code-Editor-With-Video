@@ -14,10 +14,7 @@ import socket from "@/lib/socket";
 import { useAppDispatch } from "@/lib/store/hooks";
 import { setRoomName } from "@/lib/store/slices/socket/joinRoomSlice";
 import { ChangeEvent, FormEvent, useRef, useState } from "react";
-interface ChildProps {
-    onButtonClick: () => void; // Function that takes no arguments and returns void
-}
-
+ 
 export function JoinRoom() {
 
 
@@ -33,7 +30,6 @@ export function JoinRoom() {
         dispatch(setRoomName({ roomName: name }))
         socket.emit("joinRoom", name);
     }
-
 
 
     return (

@@ -18,20 +18,21 @@ const Home = () => {
   const [rightBarWidthCounter, setRightBarWidthCounter] = useState(100);
   const [leftSidebarWidth, setLeftSidebarWidth] = useState(15);
   const checkWidthLeftBar = (size: number): void => {
-    setLeftBarWidthCounter(size);  
+    setLeftBarWidthCounter(size); // Set the percentage width
   }
   const checkWidthRighttBar = (size: number): void => {
-    setRightBarWidthCounter(size);  
+    setRightBarWidthCounter(size); // Set the percentage width
   }
 
 
 
   return (<>
     <div className="h-full w-full pt-[68px] fixed">
-    
+      {/* <SideLeftBar divRef={divRef} size= {size}/> */}
+
       <ResizablePanelGroup direction="horizontal" className="px-1 ">
 
-      
+        {/* Sidebar */}
         <SideLeftBar width={leftBarWidthCounter} />
 
         <ResizablePanel defaultSize={67} className="mb-1 rounded-md ml-[1px] mr-[1px] relative">
