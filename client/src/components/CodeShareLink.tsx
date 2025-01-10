@@ -55,23 +55,23 @@ export function CodeShareLink() {
       setShareLink(newUrl);
       setShare("Stop Share");
     } else {
-      
-      window.history.pushState(null, "", "/");
+
       setTimeout(() => {
         const roomName = localStorage.getItem("roomName");
-
-      if (roomName) {
-        socket.emit('leaveRoom', roomName);
-      }
-      setShareCount(0);
-
-      localStorage.removeItem("isSharing");
-      localStorage.removeItem("roomName");
-      localStorage.removeItem("shareLink");
-
-      setShareLink("");
-      setShare("Start Share");
+        
+        if (roomName) {
+          socket.emit('leaveRoom', roomName);
+        }
+        setShareCount(0);
+        
+        localStorage.removeItem("isSharing");
+        localStorage.removeItem("roomName");
+        localStorage.removeItem("shareLink");
+        
+        setShareLink("");
+        setShare("Start Share");
       }, 100);
+      window.history.pushState(null, "", "/");
     }
 
   };
@@ -94,7 +94,7 @@ export function CodeShareLink() {
       setShare("Stop Share");
       setShareLink(savedShareLink);
       const currentUrl = window.location.href;
-      if (currentUrl.length != "http://localhost:3000/4604f366-6791-495f-9002-e42a3a88cf3b".length) {
+      if (currentUrl.length != "https://codemax-demo.vercel.app/4604f366-6791-495f-9002-e42a3a88cf3b".length) {
 
         const roomName = localStorage.getItem("roomName");
         if (roomName) {
