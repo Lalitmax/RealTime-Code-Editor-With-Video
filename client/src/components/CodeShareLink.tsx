@@ -71,7 +71,9 @@ export function CodeShareLink() {
         setShareLink("");
         setShare("Start Share");
       }, 100);
-      // window.history.pushState(null, "", "/");
+      window.history.pushState(null, "", "/");
+      window.location.href = "/";
+
     }
 
   };
