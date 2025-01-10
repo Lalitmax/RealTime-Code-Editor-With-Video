@@ -37,7 +37,7 @@ export function CodeShareLink() {
   const handleShare = () => {
     if (share === "Start Share") {
       const roomName = uuidv4();
-      const newUrl = `https://codemax-demo.vercel.app//${roomName}`;
+      const newUrl = `https://codemax-demo.vercel.app/${roomName}`;
 
       // Update local storage and URL 
       localStorage.setItem("roomName", roomName);
