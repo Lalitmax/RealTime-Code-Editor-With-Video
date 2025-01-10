@@ -135,10 +135,12 @@ export function CodeShareLink() {
 
     socket.on("newJoin", (payload: t) => {
       const currentUrl = window.location.href;
+      const savedShareLink = localStorage.getItem("shareLink") || "";
+
       if (payload.isCollab == true) {
         localStorage.setItem("isSharing", "true");
         localStorage.setItem("isCollab", "true");
-        localStorage.setItem("shareLink", currentUrl);
+        localStorage.setItem("shareLink", savedShareLink);
         setShareLink(currentUrl);
         setShare("Stop Share");
 
