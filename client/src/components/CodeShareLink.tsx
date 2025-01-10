@@ -57,22 +57,23 @@ export function CodeShareLink() {
     } else {
 
       // setTimeout(() => {
-      //   const roomName = localStorage.getItem("roomName");
+        const roomName = localStorage.getItem("roomName");
         
-      //   if (roomName) {
-      //     socket.emit('leaveRoom', roomName);
-      //   }
-      //   setShareCount(0);
+        if (roomName) {
+          socket.emit('leaveRoom', roomName);
+        }
+        setShareCount(0);
         
-      //   localStorage.removeItem("isSharing");
-      //   localStorage.removeItem("roomName");
-      //   localStorage.removeItem("shareLink");
+        localStorage.removeItem("isSharing");
+        localStorage.removeItem("roomName");
+        localStorage.removeItem("shareLink");
         
-      //   setShareLink("");
-      //   setShare("Start Share");
+        setShareLink("");
+        setShare("Start Share");
       // }, 100);
       // window.history.pushState(null, "", "/");
       window.location.href = "/";
+      
 
     }
 
