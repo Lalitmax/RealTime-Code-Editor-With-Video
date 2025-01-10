@@ -37,9 +37,9 @@ export function CodeShareLink() {
   const handleShare = () => {
     if (share === "Start Share") {
       const roomName = uuidv4();
-      const newUrl = `http://localhost:3000/${roomName}`;
+      const newUrl = `https://codemax-demo.vercel.app//${roomName}`;
 
-      // Update local storage and URL
+      // Update local storage and URL 
       localStorage.setItem("roomName", roomName);
       localStorage.setItem("isSharing", "true");
       localStorage.setItem("shareLink", newUrl);
@@ -48,16 +48,19 @@ export function CodeShareLink() {
       // Emit socket events
       socket.emit("joinRoom", roomName);
       socket.emit("chat", {
-        chat:  tempChats,
+        chat: tempChats,
         roomName,
       });
 
       setShareLink(newUrl);
       setShare("Stop Share");
     } else {
-      const roomName = localStorage.getItem("roomName");
-       
-      if(roomName) {
+      
+      window.history.pushState(null, "", "/");
+      setTimeout(() => {
+        const roomName = localStorage.getItem("roomName");
+
+      if (roomName) {
         socket.emit('leaveRoom', roomName);
       }
       setShareCount(0);
@@ -66,11 +69,10 @@ export function CodeShareLink() {
       localStorage.removeItem("roomName");
       localStorage.removeItem("shareLink");
 
-      window.history.pushState(null, "", "/");
-
       setShareLink("");
       setShare("Start Share");
-     }
+      }, 100);
+    }
 
   };
 
@@ -123,19 +125,25 @@ export function CodeShareLink() {
   useEffect(() => {
 
     socket.on("userJoined", (noOfJoinedUser) => {
-       setShareCount(noOfJoinedUser - 1);
+      setShareCount(noOfJoinedUser - 1);
     });
 
     socket.on("userLeft", (noOfJoinedUser) => {
       setShareCount(noOfJoinedUser - 1);
-      
+
     });
 
     socket.on("newJoin", (payload: t) => {
       const currentUrl = window.location.href;
       if (payload.isCollab == true) {
         localStorage.setItem("isSharing", "true");
+        localStorage.setItem("isCollab", "true");
         localStorage.setItem("shareLink", currentUrl);
+        setShareLink(currentUrl);
+        setShare("Stop Share");
+
+
+
       }
 
 

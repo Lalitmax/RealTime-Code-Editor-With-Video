@@ -36,7 +36,7 @@ const Home = () => {
 
     // Ensure `paramsRoomName` exists before proceeding
     if (!paramsRoomName) {
-      console.warn("No paramsRoomName found!");
+      console.log("No paramsRoomName found!");
       return;
     }
 
