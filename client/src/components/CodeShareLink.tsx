@@ -56,22 +56,22 @@ export function CodeShareLink() {
       setShare("Stop Share");
     } else {
 
-      setTimeout(() => {
-        const roomName = localStorage.getItem("roomName");
+      // setTimeout(() => {
+      //   const roomName = localStorage.getItem("roomName");
         
-        if (roomName) {
-          socket.emit('leaveRoom', roomName);
-        }
-        setShareCount(0);
+      //   if (roomName) {
+      //     socket.emit('leaveRoom', roomName);
+      //   }
+      //   setShareCount(0);
         
-        localStorage.removeItem("isSharing");
-        localStorage.removeItem("roomName");
-        localStorage.removeItem("shareLink");
+      //   localStorage.removeItem("isSharing");
+      //   localStorage.removeItem("roomName");
+      //   localStorage.removeItem("shareLink");
         
-        setShareLink("");
-        setShare("Start Share");
-      }, 100);
-      window.history.pushState(null, "", "/");
+      //   setShareLink("");
+      //   setShare("Start Share");
+      // }, 100);
+      // window.history.pushState(null, "", "/");
       window.location.href = "/";
 
     }
