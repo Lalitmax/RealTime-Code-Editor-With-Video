@@ -38,7 +38,6 @@ export function CodeShareLink() {
     if (share === "Start Share") {
       const roomName = uuidv4();
       const newUrl = `https://codemax-demo.vercel.app/${roomName}`;
-
       // Update local storage and URL 
       localStorage.setItem("roomName", roomName);
       localStorage.setItem("isSharing", "true");
@@ -56,24 +55,22 @@ export function CodeShareLink() {
       setShare("Stop Share");
     } else {
 
-      // setTimeout(() => {
-        const roomName = localStorage.getItem("roomName");
-        
-        if (roomName) {
-          socket.emit('leaveRoom', roomName);
-        }
-        setShareCount(0);
-        
-        localStorage.removeItem("isSharing");
-        localStorage.removeItem("roomName");
-        localStorage.removeItem("shareLink");
-        
-        setShareLink("");
-        setShare("Start Share");
-      // }, 100);
-      // window.history.pushState(null, "", "/");
+
+      const roomName = localStorage.getItem("roomName");
+
+      if (roomName) {
+        socket.emit('leaveRoom', roomName);
+      }
+      setShareCount(0);
+
+      localStorage.removeItem("isSharing");
+      localStorage.removeItem("roomName");
+      localStorage.removeItem("shareLink");
+
+      setShareLink("");
+      setShare("Start Share");
       window.location.href = "/";
-      
+
 
     }
 
@@ -193,12 +190,13 @@ export function CodeShareLink() {
             </Button>
           </div>
         )}
-        <Button
-          className={`mt-4 w-full ${share === "Stop Share" ? "bg-red-500" : "bg-green-500"}`}
+        <button
+          className={`px-4 py-2 rounded text-white font-bold ${share === "Start Share" ? "bg-blue-500" : "bg-red-500"
+            }`}
           onClick={handleShare}
         >
           {share}
-        </Button>
+        </button>
         <DialogFooter className="sm:justify-start">
           <DialogClose asChild>
             <Button type="button" variant="secondary">
