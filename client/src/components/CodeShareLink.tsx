@@ -17,6 +17,7 @@ import { Label } from "@/components/ui/label";
 import { v4 as uuidv4 } from "uuid";
 
 import socket from "@/lib/socket";
+import SideRightBar from "./SideRightBar";
 
 
 interface t {
@@ -38,6 +39,7 @@ export function CodeShareLink() {
     if (share === "Start Share") {
       const roomName = uuidv4();
       const newUrl = `https://codemax-demo.vercel.app/${roomName}`;
+
       // Update local storage and URL 
       localStorage.setItem("roomName", roomName);
       localStorage.setItem("isSharing", "true");
@@ -94,7 +96,7 @@ export function CodeShareLink() {
       setShare("Stop Share");
       setShareLink(savedShareLink);
       const currentUrl = window.location.href;
-      if (currentUrl.length != "https://codemax-demo.vercel.app/4604f366-6791-495f-9002-e42a3a88cf3b".length) {
+      if (currentUrl.length != "https://realtime-code-editor-with-video.onrender.com/4604f366-6791-495f-9002-e42a3a88cf3b".length) {
 
         const roomName = localStorage.getItem("roomName");
         if (roomName) {
@@ -143,12 +145,7 @@ export function CodeShareLink() {
         localStorage.setItem("shareLink", savedShareLink);
         setShareLink(currentUrl);
         setShare("Stop Share");
-
-
-
       }
-
-
     })
 
     return () => {
