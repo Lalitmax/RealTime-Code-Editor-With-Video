@@ -17,6 +17,7 @@ import { Label } from "@/components/ui/label";
 import { v4 as uuidv4 } from "uuid";
 
 import socket from "@/lib/socket";
+import SideRightBar from "./SideRightBar";
 
 
 interface t {
@@ -37,7 +38,7 @@ export function CodeShareLink() {
   const handleShare = () => {
     if (share === "Start Share") {
       const roomName = uuidv4();
-      const newUrl = `https://codemax-demo.vercel.app/${roomName}`;
+      const newUrl = `https://realtime-code-editor-with-video.onrender.com/${roomName}`;
 
       // Update local storage and URL 
       localStorage.setItem("roomName", roomName);
@@ -56,24 +57,22 @@ export function CodeShareLink() {
       setShare("Stop Share");
     } else {
 
-      // setTimeout(() => {
-        const roomName = localStorage.getItem("roomName");
-        
-        if (roomName) {
-          socket.emit('leaveRoom', roomName);
-        }
-        setShareCount(0);
-        
-        localStorage.removeItem("isSharing");
-        localStorage.removeItem("roomName");
-        localStorage.removeItem("shareLink");
-        
-        setShareLink("");
-        setShare("Start Share");
-      // }, 100);
-      // window.history.pushState(null, "", "/");
+
+      const roomName = localStorage.getItem("roomName");
+
+      if (roomName) {
+        socket.emit('leaveRoom', roomName);
+      }
+      setShareCount(0);
+
+      localStorage.removeItem("isSharing");
+      localStorage.removeItem("roomName");
+      localStorage.removeItem("shareLink");
+
+      setShareLink("");
+      setShare("Start Share");
       window.location.href = "/";
-      
+
 
     }
 
@@ -97,7 +96,7 @@ export function CodeShareLink() {
       setShare("Stop Share");
       setShareLink(savedShareLink);
       const currentUrl = window.location.href;
-      if (currentUrl.length != "https://codemax-demo.vercel.app/4604f366-6791-495f-9002-e42a3a88cf3b".length) {
+      if (currentUrl.length != "https://realtime-code-editor-with-video.onrender.com/4604f366-6791-495f-9002-e42a3a88cf3b".length) {
 
         const roomName = localStorage.getItem("roomName");
         if (roomName) {
@@ -146,12 +145,7 @@ export function CodeShareLink() {
         localStorage.setItem("shareLink", savedShareLink);
         setShareLink(currentUrl);
         setShare("Stop Share");
-
-
-
       }
-
-
     })
 
     return () => {
@@ -193,12 +187,13 @@ export function CodeShareLink() {
             </Button>
           </div>
         )}
-        <Button
-          className={`mt-4 w-full ${share === "Stop Share" ? "bg-red-500" : "bg-green-500"}`}
+        <button
+          className={`px-4 py-2 rounded text-white font-bold ${share === "Start Share" ? "bg-blue-500" : "bg-red-500"
+            }`}
           onClick={handleShare}
         >
           {share}
-        </Button>
+        </button>
         <DialogFooter className="sm:justify-start">
           <DialogClose asChild>
             <Button type="button" variant="secondary">
