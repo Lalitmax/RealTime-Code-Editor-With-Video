@@ -15,11 +15,12 @@
 ## Table of Contents
 - [Project Setup](#project-setup)
   - [Prerequisites](#prerequisites)
-  - [Environment Variables](#environment-variables)
+  - [Environment Variables for client](#environment-variables-for-client)
+  - [Environment Variables for server](#environment-variables-for-server)
   - [Installation](#installation)
 - [Project Structure](#project-structure)
+- [socket setup](#socket-setup) 
 - [Running the Application](#running-the-application)
-- [Socket.IO Setup](#socketio-setup)
 - [Contributing](#contributing)
 
 ---
@@ -31,7 +32,17 @@
 - npm (Node package manager)
 - Refer to the [Socket.IO Documentation](https://socket.io/docs/v4) for additional insights on real-time communication.
 
-### Environment Variables
+### Environment Variables for client
+To configure your application with Agora and the backend, follow these steps:
+
+1. Open your `.env` file in the root directory of your project.
+2. Add the following environment variables:
+
+```env
+NEXT_PUBLIC_AGORA_APP_ID=random234fmdjd3ed3ed3wd  # Replace with your Agora App ID
+```
+   
+### Environment Variables for server
 To set up the server, you need to create an environment variable for the port:
 
 1. Navigate to the `server` folder.
@@ -71,7 +82,30 @@ cd RealTime-Code-Editor-With-Video
 
 ## Project Structure
 - **`client/`**: Contains the frontend code using Next.js, with video and code editor components.
+  
+  <img width="347" alt="client ps" src="https://github.com/user-attachments/assets/3272d01a-bf3d-4718-8357-290d538677e7" />
+
 - **`server/`**: Hosts the backend using Express and Socket.IO for real-time interactions.
+
+  <img width="303" alt="server ps" src="https://github.com/user-attachments/assets/fdc3a7de-7d25-4326-86c0-1c6a808d16da" />
+
+## Socket Setup
+
+In your project, the socket connection is established in the `lib/socket.ts` file. To set up the correct backend URL for your project, follow these steps:
+
+1. Open the `lib/socket.ts` file.
+2. Replace the current backend URL with your own server URL.
+
+For example:
+```ts
+// lib/socket.ts
+import { io, Socket } from 'socket.io-client';
+
+// Replace the URL below with your backend URL
+const socket: Socket = io('https://your-backend-url.com');  // Replace with your backend URL
+
+export default socket;
+```
 
 ## Running the Application
 
