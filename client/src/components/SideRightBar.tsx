@@ -41,11 +41,11 @@ const SideRightBar: React.FC<WidthProp> = ({ width }) => {
     const content = (
         <div className="w-64 text-sm text-gray-500">
             <div className="border-b border-gray-200 bg-gray-100 px-3 py-2">
-                <h3 className="font-semibold text-gray-900">First Start Share</h3>
+                <h3 className="font-semibold text-gray-900">First Start Share Session</h3>
             </div>
             <div className="px-3 py-2">
                 <p>
-                    Create Room  Then start video sharing
+                    Click share button on top navbar ans start share
                 </p>
             </div>
         </div>

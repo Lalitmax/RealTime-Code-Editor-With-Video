@@ -13,7 +13,6 @@ import AgoraRTC, {
   useRemoteUsers,
 } from "agora-rtc-react";
 import { useState } from "react";
-import DeviceLoader from "@/components/DeviceLoader";
 
 type CallProps = {
   appId: string; // Agora App ID
