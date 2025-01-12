@@ -125,8 +125,6 @@ export default socket;
    ```
 2. The server will run on `http://localhost:3005`.
 
-## Socket.IO Setup
-Socket.IO facilitates real-time, bi-directional communication between the client and server. For additional customization and features, check out the [Socket.IO Documentation](https://socket.io/docs/v4).
 
 ## Contributing
 We welcome contributions from the community! Join us in enhancing the RealTime Code Editor With Video and enjoy collaborative coding!
