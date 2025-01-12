@@ -38,7 +38,7 @@ export function CodeShareLink() {
   const handleShare = () => {
     if (share === "Start Share") {
       const roomName = uuidv4();
-      const newUrl = `https://realtime-code-editor-with-video.onrender.com/${roomName}`;
+      const newUrl = `https://codemax-demo.vercel.app/${roomName}`;
 
       // Update local storage and URL 
       localStorage.setItem("roomName", roomName);
@@ -96,7 +96,7 @@ export function CodeShareLink() {
       setShare("Stop Share");
       setShareLink(savedShareLink);
       const currentUrl = window.location.href;
-      if (currentUrl.length != "https://realtime-code-editor-with-video.onrender.com/4604f366-6791-495f-9002-e42a3a88cf3b".length) {
+      if (currentUrl.length != "https://codemax-demo.vercel.app/4604f366-6791-495f-9002-e42a3a88cf3b".length) {
 
         const roomName = localStorage.getItem("roomName");
         if (roomName) {

@@ -13,6 +13,7 @@ import AgoraRTC, {
   useRemoteUsers,
 } from "agora-rtc-react";
 import { useState } from "react";
+import DeviceLoader from "@/components/DeviceLoader";
 
 type CallProps = {
   appId: string; // Agora App ID
@@ -22,6 +23,7 @@ type CallProps = {
   onToggleCamera: () => void
   onToggleMic: () => void
   onLeave: () => void
+  handleClick: () => void
 
 };
 
@@ -31,16 +33,17 @@ type VideosProps = {
   token?: string | null; // Optional token for authentication
   onLeave?: () => void; // Callback for leaving the call
   onError?: (error: Error) => void; // Callback for handling errors
+  handleClick: () => void
 };
 
-function Call({ appId, channelName }: CallProps) {
+function Call({ appId, channelName, handleClick }: CallProps) {
   const client = useRTCClient(
     AgoraRTC.createClient({ codec: "vp8", mode: "rtc" })
   );
 
   return (
     <AgoraRTCProvider client={client}>
-      <Videos appId={appId} channelName={channelName} />
+      <Videos appId={appId} channelName={channelName} handleClick={handleClick} />
     </AgoraRTCProvider>
   );
 }
@@ -50,6 +53,7 @@ function Videos({
   channelName,
   token = null,
   onLeave,
+  handleClick,
   onError,
 }: VideosProps) {
   // Local tracks for microphone and camera
@@ -95,22 +99,24 @@ function Videos({
   };
 
   // Leave the call
-  const handleLeave = async () => {
-    try {
-      if (client) {
-        await client.leave();
-        if (onLeave) onLeave();
-        else window.location.href = "/"; // Redirect to home or another page
-      }
-    } catch (error) {
-      if (onError) onError(error as Error);
-    }
+  const handleLeave = () => {
+    handleClick()
+    // try {
+    //   if (client) {
+
+    //     await client.leave();
+    //     if (onLeave) onLeave();
+    //     else window.location.href="/"
+    //   }
+    // } catch (error) {
+    //   if (onError) onError(error as Error);
+    // }
   };
 
   if (isLoadingMic || isLoadingCam) {
     return (
-      <div className="flex flex-col items-center pt-40">
-        Loading devices...
+      <div className="flex items-center justify-center min-h-screen bg-[#00a3fe] rounded-md">
+        <img src="https://i.pinimg.com/originals/9a/c5/44/9ac544b2ccea35627fb797462e390785.gif" alt="" />
       </div>
     );
   }
@@ -123,11 +129,23 @@ function Videos({
     if (onError) onError(new Error(errorMessage));
 
     return (
-      <div className="flex flex-col items-center pt-40 text-red-500">
-        {micError && <p>{errorMessage}</p>}
-        {camError && <p>{errorMessage}</p>}
-        <p>Please ensure your devices are not in use by another application.</p>
+      <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 dark:bg-gray-900 px-4">
+        <div className="bg-white dark:bg-gray-800 shadow-xl rounded-lg p-6 max-w-sm text-center">
+          <h2 className="text-2xl font-extrabold text-red-600 mb-4">
+            Camera or Device in Use
+          </h2>
+          <p className="text-gray-700 dark:text-gray-300 mb-6">
+            Please ensure your camera or microphone is not being used by another application.
+          </p>
+          <button
+            onClick={() => handleClick()}
+            className="px-6 py-3 bg-blue-500 text-white font-medium rounded-lg shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
+          >
+            Go Back
+          </button>
+        </div>
       </div>
+
     );
   }
 
@@ -136,32 +154,23 @@ function Videos({
   return (
     <div className="flex flex-col justify-between w-full h-screen p-1">
       {/* Video Grid */}
-      <div className="h-52 w-full rounded-md">
-        <LocalVideoTrack
-          track={localCameraTrack}
-          play={true}
-          style={{borderRadius: 10}}
-          className="w-20 h-28 rounded-md"
-        />
+      <div className="h-52 w-full rounded-md ">
+        <div className="video rounded-md overflow-hidden h-52 w-full">
+          <LocalVideoTrack
+            track={localCameraTrack}
+            play={true}
+            style={{ borderRadius: 10 }}
+            className="w-20 h-28 rounded-md"
+          />
+        </div>
 
         <div
-          className={`grid grid-cols-2 md:grid-cols-2 gap-1 p-1`}
+          className={`flex pt-1 w-full items-center justify-between`}
         >
-          {/* {Array(4)
-            .fill(0)
-            .map((_, idx) => (
-              <div key={idx}>
-                <img
-                  className="h-auto max-w-full rounded-lg"
-                  src="https://shorturl.at/WeHfw"
-                  alt={`Image ${idx + 1}`}
-                />
-              </div>
-            ))} */}
 
           {remoteUsers.map((user) => (
 
-            <div key={user.uid} className="h-32 w-32 rounded-lg">
+            <div key={user.uid} className="h-[7.5rem] w-[9.8rem] rounded-md overflow-hidden ">
               <RemoteUser user={user} key={user.uid} />
             </div>
 
@@ -176,28 +185,29 @@ function Videos({
 
 
       {/* Controls */}
-      <div className="flex justify-center space-x-4 mt-4">
+      <div className="flex justify-center space-x-4 mt-4 rounded-md bg-[#f7f7f7] p-2 border">
         <button
           onClick={toggleCamera}
-          className={`px-4 py-2 text-white rounded-lg ${isCameraOn ? "bg-blue-500 hover:bg-blue-600" : "bg-gray-500"
+          className={`w-40 h-12 flex items-center justify-center px-4 py-3 text-white font-semibold rounded-lg transition-colors duration-200 ${isCameraOn ? "bg-blue-500 hover:bg-blue-600" : "bg-gray-500 hover:bg-gray-600"
             }`}
         >
-          {isCameraOn ? "Stop Camera" : "Start Camera"}
+          {isCameraOn ? "Camera" : "Camera"}
         </button>
         <button
           onClick={toggleMic}
-          className={`px-4 py-2 text-white rounded-lg ${isMicOn ? "bg-green-500 hover:bg-green-600" : "bg-gray-500"
+          className={`w-40 h-12 flex items-center justify-center px-4 py-3 text-white font-semibold rounded-lg transition-colors duration-200 ${isMicOn ? "bg-green-500 hover:bg-green-600" : "bg-gray-500 hover:bg-gray-600"
             }`}
         >
-          {isMicOn ? "Mute Mic" : "Unmute Mic"}
+          {isMicOn ? "Mute" : "Unmute"}
         </button>
         <button
           onClick={handleLeave}
-          className="px-4 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600"
+          className="w-40 h-12 flex items-center justify-center px-4 py-3 text-white font-semibold bg-red-500 rounded-lg hover:bg-red-600 transition-colors duration-200"
         >
           Leave
         </button>
       </div>
+
     </div>
   );
 }

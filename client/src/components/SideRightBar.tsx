@@ -10,6 +10,7 @@ type WidthProp = {
 };
 
 const SideRightBar: React.FC<WidthProp> = ({ width }) => {
+    console.log("hello sidebar called")
     const [startVideo, setStartVideo] = useState(false);
     const [isCameraOn, setCameraOn] = useState(true);
     const [isMicOn, setMicOn] = useState(true);
@@ -56,7 +57,7 @@ const SideRightBar: React.FC<WidthProp> = ({ width }) => {
     return (
         <div className="h-full bg-white dark:bg-gray-800 rounded-md border overflow-hidden">
             {/* Video Section */}
-            <div className="h-[calc(100%-10%)] bg-white dark:bg-gray-800 rounded-md p-1 flex flex-col items-center">
+            <div className="h-full bg-white dark:bg-gray-800 rounded-md p-1 flex flex-col items-center">
                 {startVideo && channelName ? (
 
                     <Call
@@ -67,70 +68,76 @@ const SideRightBar: React.FC<WidthProp> = ({ width }) => {
                         onToggleCamera={handleToggleCamera}
                         onToggleMic={handleToggleMic}
                         onLeave={handleLeave}
+                        handleClick={handleClick}
                     />
 
                 ) : (
-                    <div>
-                        <div className={`h-[clac(100%-20%)] bg-white dark:bg-gray-800 rounded-md p-1`}>
+                    <div className="flex flex-col justify-between h-full">
+
+                        <div className={`h-full bg-white dark:bg-gray-800 rounded-md p-1`}>
                             <img
                                 className="h-auto w-full rounded-lg"
                                 src="https://shorturl.at/7kyBW"
                                 alt=""
                             />
+
+                            <div
+                                className={`grid grid-cols-2 md:grid-cols-2 gap-1 pt-1 h-[calc(100%-${width})] overflow-hidden`}
+                            >
+                                <div>
+                                    <img
+                                        className="h-auto max-w-full rounded-lg"
+                                        src="https://shorturl.at/WeHfw"
+                                        alt=""
+                                    />
+                                </div>
+                                <div>
+                                    <img
+                                        className="h-auto max-w-full rounded-lg"
+                                        src="https://shorturl.at/WeHfw"
+                                        alt=""
+                                    />
+                                </div>
+                                <div>
+                                    <img
+                                        className="h-auto max-w-full rounded-lg"
+                                        src="https://shorturl.at/WeHfw"
+                                        alt=""
+                                    />
+                                </div>
+                                <div>
+                                    <img
+                                        className="h-auto max-w-full rounded-lg"
+                                        src="https://shorturl.at/WeHfw"
+                                        alt=""
+                                    />
+                                </div>
+                            </div>
                         </div>
-                        <div
-                            className={`grid grid-cols-2 md:grid-cols-2 gap-1 p-1 h-[calc(100%-${width})] overflow-hidden`}
-                        >
-                            <div>
-                                <img
-                                    className="h-auto max-w-full rounded-lg"
-                                    src="https://shorturl.at/WeHfw"
-                                    alt=""
-                                />
-                            </div>
-                            <div>
-                                <img
-                                    className="h-auto max-w-full rounded-lg"
-                                    src="https://shorturl.at/WeHfw"
-                                    alt=""
-                                />
-                            </div>
-                            <div>
-                                <img
-                                    className="h-auto max-w-full rounded-lg"
-                                    src="https://shorturl.at/WeHfw"
-                                    alt=""
-                                />
-                            </div>
-                            <div>
-                                <img
-                                    className="h-auto max-w-full rounded-lg"
-                                    src="https://shorturl.at/WeHfw"
-                                    alt=""
-                                />
-                            </div>
+
+                        <div className="flex justify-center items-center space-x-4 mt-4 p-2 relative  rounded-md bg-[#f7f7f7] border">
+                            {!startVideo &&
+                                <button
+                                    onClick={handleClick}
+                                    className="px-4 py-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600"
+                                >
+                                    Share Video
+                                </button>
+                            }
+
+                            {isOpen && (
+                                <div
+                                    className={`z-10 bg-white border border-gray-200 shadow-lg rounded p-1 absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2`}
+                                >
+                                    {content}
+                                </div>
+                            )}
                         </div>
                     </div>
                 )}
             </div>
 
-            {/* Controls Section */}
-            <div className="flex justify-center items-center space-x-4 mt-4 p-2 relative">
-                <button
-                    onClick={handleClick}
-                    className="px-4 py-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600"
-                >
-                    {startVideo ? "Stop Video" : "Start Video"}
-                </button>
 
-                {isOpen && (
-                    <div
-                        className={`z-10 bg-white border border-gray-200 shadow-lg rounded p-1 absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2`}
-                    >
-                        {content}
-                    </div>
-                )}
-            </div>
         </div>
     );
 };
