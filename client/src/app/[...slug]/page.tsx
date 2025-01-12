@@ -52,7 +52,7 @@ const Home = () => {
 
   return (<>
     <div className="h-full w-full pt-[68px] fixed">
- 
+
       <ResizablePanelGroup direction="horizontal" className="px-1 ">
 
         <SideLeftBar width={leftBarWidthCounter} />
@@ -74,13 +74,11 @@ const Home = () => {
 
 
         </ResizablePanel>
-        <ResizableHandle withHandle />
 
 
-        <ResizablePanel onResize={(size) => checkWidthRighttBar(size)} defaultSize={20}
-          className="mb-1 rounded-md flex-col justify-between items-center ml-[1px]">
+        <div className="mb-1 rounded-md flex-col justify-between items-center ml-[1px] w-[21rem]">
           <SideRightBar width={rightBarWidthCounter} />
-        </ResizablePanel>
+        </div>
 
 
 

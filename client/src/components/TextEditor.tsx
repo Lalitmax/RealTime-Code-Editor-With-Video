@@ -26,7 +26,7 @@ const TextEditor = () => {
     const chats = payload.chats;
     if (editorRef.current) {
       const doc = editorRef.current.getDoc();
-      if (payload.chats.length !== 0) {
+      if (payload.chats && payload.chats.length !== 0) {
         doc.setValue(payload.chats);
       }
     }
