@@ -151,10 +151,10 @@ function Videos({
   const unit = "minmax(0, 1fr) ";
 
   return (
-    <div className="flex flex-col justify-between w-full h-screen p-1">
+    <div className="flex flex-col justify-between w-full h-full p-1">
       {/* Video Grid */}
-      <div className="h-52 w-full rounded-md ">
-        <div className="video rounded-md overflow-hidden h-52 w-full">
+      <div className="h-[calc(100%-21%)] w-full rounded-md ">
+        <div className="video rounded-md overflow-hidden h-52 w-full mb-1">
           <LocalVideoTrack
             track={localCameraTrack}
             play={true}
@@ -164,18 +164,23 @@ function Videos({
         </div>
 
         <div
-          className={`flex pt-1 w-full items-center justify-between`}
+          className={`grid grid-cols-2  rounded-md gap-1 w-full items-center justify-between overflow-x-hidden overflow-y-auto max-h-[calc(100%-22%)] scrollbar-thin scrollbar-thumb-rounded scrollbar-thumb-gray-300 scrollbar-track-[#f5f5f5]`}
         >
-
           {remoteUsers.map((user) => (
-
-            <div key={user.uid} className="h-[7.5rem] w-[9.8rem] rounded-md overflow-hidden ">
-              <RemoteUser user={user} key={user.uid} />
+            <div
+              key={user.uid}
+              className={`h-[7.5rem] ${remoteUsers.length < 7 ? "w-[9.8rem]" : "w-[9.4rem]"}  rounded-md overflow-hidden`}
+            >
+              <RemoteUser user={user} />
+              {remoteUsers.length}
             </div>
-
-
           ))}
+
+          
+
         </div>
+
+
 
 
 

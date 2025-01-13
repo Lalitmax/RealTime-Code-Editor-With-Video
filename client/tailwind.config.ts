@@ -1,4 +1,4 @@
-import type { Config } from "tailwindcss"
+import type { Config } from "tailwindcss";
 
 const config = {
   darkMode: ["class"],
@@ -8,9 +8,7 @@ const config = {
     './app/**/*.{ts,tsx}',
     './src/**/*.{ts,tsx}',
     "./node_modules/flowbite/**/*.js",  
-  
-
-	],
+  ],
   prefix: "",
   theme: {
     container: {
@@ -20,6 +18,8 @@ const config = {
         "2xl": "1400px",
       },
     },
+
+    
     extend: {
       colors: {
         border: "hsl(var(--border))",
@@ -77,7 +77,11 @@ const config = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate"), require('flowbite/plugin')],
-} satisfies Config
+  plugins: [
+    require("tailwindcss-animate"), 
+    require('flowbite/plugin'),
+    require('tailwind-scrollbar') // Add the scrollbar plugin
+  ],
+} satisfies Config;
 
-export default config
+export default config;
