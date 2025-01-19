@@ -17,8 +17,6 @@ import { Label } from "@/components/ui/label";
 import { v4 as uuidv4 } from "uuid";
 
 import socket from "@/lib/socket";
-import SideRightBar from "./SideRightBar";
-
 
 interface t {
   chats: string,
@@ -29,8 +27,6 @@ interface t {
 
 export function CodeShareLink() {
   const [shareCount, setShareCount] = useState(0);
-  const [shareClicked, setShareClicked] = useState(false);
-
   const [copied, setCopied] = useState(false);
   const [share, setShare] = useState("Start Share");
   const [shareLink, setShareLink] = useState<string>("");

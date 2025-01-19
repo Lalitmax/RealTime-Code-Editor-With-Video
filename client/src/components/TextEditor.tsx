@@ -89,8 +89,7 @@ const TextEditor = () => {
           const code = instance.getValue();
 
           if (origin !== 'setValue') {
-            console.log(`Updated Code: ${code}`);
-            if (code) {
+             if (code) {
               localStorage.setItem('chats', code);
             }
             socket.emit('chat', {

@@ -10,7 +10,6 @@ type WidthProp = {
 };
 
 const SideRightBar: React.FC<WidthProp> = ({ width }) => {
-    console.log("hello sidebar called")
     const [startVideo, setStartVideo] = useState(false);
     const [isCameraOn, setCameraOn] = useState(true);
     const [isMicOn, setMicOn] = useState(true);
@@ -30,6 +29,10 @@ const SideRightBar: React.FC<WidthProp> = ({ width }) => {
 
         if (!localStorage.getItem("roomName")) {
             setIsOpen(prev => !prev);
+            setTimeout(() => {
+                setIsOpen(prev => !prev);
+            }, 1500);
+
         } else {
             setStartVideo((prev) => !prev);
             setIsOpen(false);
@@ -45,7 +48,7 @@ const SideRightBar: React.FC<WidthProp> = ({ width }) => {
             </div>
             <div className="px-3 py-2">
                 <p>
-                    Click share button on top navbar ans start share
+                    Click share button on top navbar and start share
                 </p>
             </div>
         </div>
@@ -126,7 +129,7 @@ const SideRightBar: React.FC<WidthProp> = ({ width }) => {
                             }
 
                             {isOpen && (
-                                <div
+                                <div    
                                     className={`z-10 bg-white border border-gray-200 shadow-lg rounded p-1 absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2`}
                                 >
                                     {content}
