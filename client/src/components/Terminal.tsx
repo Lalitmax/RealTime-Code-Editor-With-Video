@@ -37,8 +37,8 @@ const Terminal: React.FC<TerminalProps> = ({ langMode }) => {
     const executeCode = async (inputPara: string, code: string, language: string, versionIndex: string) => {
         try {
             const response = await axios.post("https://realtime-code-editor-with-video.onrender.com/execute", {
-                clientId: process.env.CLIENT_ID!,
-                clientSecret: process.env.CLIENT_SECRET!,
+                clientId: process.env.NEXT_PUBLIC_CLIENT_ID,
+                clientSecret: process.env.NEXT_PUBLIC_CLIENT_SECRET,
                 script: code,
                 stdin: inputPara,
                 language,
