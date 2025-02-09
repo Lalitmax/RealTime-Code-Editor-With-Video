@@ -4,23 +4,41 @@ import { FaCode } from 'react-icons/fa6';
 import CodeMirror from 'codemirror';
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/xq-light.css';
+
+// Addons for better editing experience
 import 'codemirror/addon/edit/matchbrackets';
 import 'codemirror/addon/edit/closebrackets';
 import 'codemirror/mode/javascript/javascript';
+
+import 'codemirror/mode/python/python';
+import 'codemirror/mode/clike/clike'; // Supports Java & C++
 import socket from '@/lib/socket';
 import { v4 as uuidv4 } from 'uuid';
+import { Button } from "@/components/ui/button"
+import { MdOutlineArrowDropDown } from "react-icons/md";
+import { languages } from '@/lib/utils'
+
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+
+
 
 interface t {
-    chats: string,
-    isCollab: boolean
+  chats: string,
+  isCollab: boolean
 
-  }
+}
 
-const TextEditor = () => {
+interface Props {
+  setLangMode: (mode: string) => void;
+}
+
+
+const TextEditor: React.FC<Props> = ({ setLangMode }) => {
   const [clientId] = useState<string>(uuidv4());
   const editorRef = useRef<CodeMirror.Editor | null>(null);
+  const [selectedLanguage, setSelectedLanguage] = useState("Java")
 
-  
+
 
   const handleNewJoin = (payload: t) => {
     const chats = payload.chats;
@@ -43,6 +61,28 @@ const TextEditor = () => {
       }
     }
   };
+  const modeMap: { [key: string]: string } = {
+    "C++": "javascript",
+    C: "javascript",
+    Java: "text/x-java",
+    Python: "python",
+    JavaScript: "javascript",
+  };
+
+
+  useEffect(() => {
+    if (editorRef.current) {
+      const editor = editorRef.current
+      const defaultLanguage = languages.find((lang) => lang.lang === selectedLanguage)
+
+      if (defaultLanguage) {
+        editor.setValue(defaultLanguage.defaultCode)
+        editor.setOption("mode", modeMap[selectedLanguage] || "text/plain");
+        setLangMode(selectedLanguage)
+
+      }
+    }
+  }, [selectedLanguage])
 
   useEffect(() => {
 
@@ -68,11 +108,19 @@ const TextEditor = () => {
 
       if (textarea) {
         const editor = CodeMirror.fromTextArea(textarea, {
-          mode: { name: 'javascript', json: true },
+
+          mode: { name: "text/x-java", },
           autoCloseBrackets: true,
           matchBrackets: true,
           lineNumbers: true,
           theme: 'xq-light',
+          indentUnit: 4,
+          tabSize: 4,
+          indentWithTabs: false,
+          extraKeys: {
+            Tab: (cm) => cm.replaceSelection("    ", "end"),
+            Enter: "newlineAndIndent",
+          },
         });
 
         editorRef.current = editor;
@@ -89,7 +137,7 @@ const TextEditor = () => {
           const code = instance.getValue();
 
           if (origin !== 'setValue') {
-             if (code) {
+            if (code) {
               localStorage.setItem('chats', code);
             }
             socket.emit('chat', {
@@ -110,6 +158,24 @@ const TextEditor = () => {
       <div className="z-10 absolute pl-2 p-r-4 h-10 dark:border-gray-700 flex items-center justify-between rounded-t-md bg-[#f7f7f7] border-[1px] w-full">
         <div className="flex flex-wrap items-center divide-gray-200 sm:divide-x sm:rtl:divide-x-reverse dark:divide-gray-600">
           <FaCode className="text-gray-600 text-xl" />
+          <DropdownMenu >
+            <DropdownMenuTrigger className='flex gap-1 outline-none'>
+              <Button variant="outline" className="min-w-[60px]  border-gray-300 max-h-[35px] ml-8 bg-[#f7f7f7]">
+                {selectedLanguage}
+                <MdOutlineArrowDropDown className=' font-bold' />
+
+              </Button>
+
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="max-h-[400px] overflow-y-auto">
+              {languages.map((lang) => (
+                <DropdownMenuItem key={lang.lang} onClick={() => setSelectedLanguage(lang.lang)} className="cursor-pointer">
+                  {lang.lang}
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
+
         </div>
         <button
           type="button"

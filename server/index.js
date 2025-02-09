@@ -1,18 +1,45 @@
-const express = require('express');
+import express from 'express';
+import { createServer } from 'http';
+import cors from 'cors';
+import { Server } from 'socket.io';
+import dotenv from 'dotenv';
+import axios from 'axios'; // ✅ Fixed missing axios import
+
+
+dotenv.config();
+
 const app = express();
-const { createServer } = require("http");
-const { Server } = require("socket.io");
-require('dotenv').config()
 const server = createServer(app);
 const io = new Server(server, {
     cors: { origin: "*" }
 });
 
-
 const roomsName = new Map();
 let chatSave = new Map();
 const port = process.env.PORT || 3002;
 let cnt = 0;
+
+app.use(express.json());
+app.use(cors());
+
+
+ 
+
+app.post("/execute", async (req, res) => {
+    console.log(req.body);
+    try {
+        const response = await axios.post("https://api.jdoodle.com/v1/execute", req.body);
+        res.json(response.data);
+    } catch (error) {
+        console.error("Execution error:", error);
+        res.status(500).json({ error: "Execution failed" });
+    }
+});
+
+app.get('/rooms', (req, res) => {
+    res.json({ rooms: Array.from(roomsName.keys()) });
+});
+
 
 
 io.on("connection", (socket) => {
@@ -27,9 +54,9 @@ io.on("connection", (socket) => {
             chatSave.set(roomName, "");
         }
 
-        
+
         if (!roomsName.get(roomName).includes(socket.id)) {
-            roomsName.get(roomName).push(socket.id);  
+            roomsName.get(roomName).push(socket.id);
         }
         console.log(`Socket ${socket.id} joined room ${roomName}`);
 
@@ -40,7 +67,7 @@ io.on("connection", (socket) => {
 
         roomsName.get(roomName).forEach(socketId => {
             // if (socketId !== socket.id) {
-            io.to(socketId).emit("userJoined",  roomsName.get(roomName).length ); // Notify others in the room
+            io.to(socketId).emit("userJoined", roomsName.get(roomName).length); // Notify others in the room
             // }
         });
         console.log(`Number of users in the room: ${roomsName.get(roomName).length}`);
@@ -78,17 +105,17 @@ io.on("connection", (socket) => {
             const sockets = roomsName.get(roomName);
             const index = sockets.indexOf(socket.id);
             if (index !== -1) {
-                sockets.splice(index, 1);  
+                sockets.splice(index, 1);
                 socket.leave(roomName)
                 console.log(`Socket ${socket.id} left room ${roomName}`);
-                io.to(roomName).emit("userLeft", roomsName.get(roomName).length);   
+                io.to(roomName).emit("userLeft", roomsName.get(roomName).length);
                 console.log('left');
 
             }
 
             if (sockets.length === 0) {
                 roomsName.delete(roomName);
-                chatSave.delete(roomName);  
+                chatSave.delete(roomName);
                 console.log(`Room ${roomName} is empty and has been deleted`);
             }
         }
@@ -104,13 +131,13 @@ io.on("connection", (socket) => {
             if (index !== -1) {
                 sockets.splice(index, 1);
                 console.log(`Socket ${socket.id} removed from room ${roomName}`);
-                io.to(roomName).emit("userLeft", roomsName.get(roomName).length);   
+                io.to(roomName).emit("userLeft", roomsName.get(roomName).length);
 
             }
 
             if (sockets.length === 0) {
                 roomsName.delete(roomName);
-                chatSave.delete(roomName);  
+                chatSave.delete(roomName);
                 console.log(`Room ${roomName} is empty and has been deleted`);
 
             }
@@ -123,11 +150,6 @@ io.on("connection", (socket) => {
 
 
 
-app.get('/rooms', (req, res) => {
-    // Convert the Map of rooms to an array of room names
-    const rooms = Array.from(roomsName.keys());
-    res.json({ rooms });
-});
 
 
 

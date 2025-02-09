@@ -21,6 +21,8 @@ const Home = () => {
 
   const [leftBarWidthCounter, setLeftBarWidthCounter] = useState(100);
   const [rightBarWidthCounter, setRightBarWidthCounter] = useState(100);
+  const [langMode, setLangMode] = useState("java");
+
   const [chat, setChat] = useState("");
   const checkWidthLeftBar = (size: number): void => {
     setLeftBarWidthCounter(size); // Set the percentage width
@@ -61,13 +63,13 @@ const Home = () => {
 
           <ResizablePanelGroup direction="vertical">
             <ResizablePanel defaultSize={25}>
-              <TextEditor />
+              <TextEditor setLangMode={setLangMode} />
             </ResizablePanel>
 
 
             <ResizableHandle withHandle />
             <ResizablePanel defaultSize={0} minSize={6}  >
-              <Terminal></Terminal>
+              <Terminal langMode={langMode} ></Terminal>
             </ResizablePanel>
 
           </ResizablePanelGroup>

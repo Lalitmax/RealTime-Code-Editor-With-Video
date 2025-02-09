@@ -16,7 +16,10 @@ import React, { useEffect, useRef, useState } from 'react'
 const Home = () => {
   const [leftBarWidthCounter, setLeftBarWidthCounter] = useState(100);
   const [rightBarWidthCounter, setRightBarWidthCounter] = useState(100);
-   const checkWidthLeftBar = (size: number): void => {
+  const [langMode, setLangMode] = useState("java");
+  
+
+  const checkWidthLeftBar = (size: number): void => {
     setLeftBarWidthCounter(size);
   }
   const checkWidthRighttBar = (size: number): void => {
@@ -37,13 +40,13 @@ const Home = () => {
 
           <ResizablePanelGroup direction="vertical">
             <ResizablePanel defaultSize={25}>
-              <TextEditor />
+              <TextEditor setLangMode={setLangMode} />  
             </ResizablePanel>
 
 
             <ResizableHandle withHandle />
             <ResizablePanel defaultSize={5} minSize={5}  >
-              <Terminal></Terminal>
+              <Terminal langMode={langMode} ></Terminal>
             </ResizablePanel>
 
           </ResizablePanelGroup>
