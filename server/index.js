@@ -3,7 +3,7 @@ import { createServer } from 'http';
 import cors from 'cors';
 import { Server } from 'socket.io';
 import dotenv from 'dotenv';
-import axios from 'axios'; // ✅ Fixed missing axios import
+import axios from 'axios';  
 
 
 dotenv.config();
@@ -21,8 +21,6 @@ let cnt = 0;
 
 app.use(express.json());
 app.use(cors());
-
-
  
 
 app.post("/execute", async (req, res) => {
@@ -147,9 +145,6 @@ io.on("connection", (socket) => {
     });
 
 });
-
-
-
 
 
 

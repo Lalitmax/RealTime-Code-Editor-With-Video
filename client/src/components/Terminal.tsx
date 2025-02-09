@@ -36,9 +36,9 @@ const Terminal: React.FC<TerminalProps> = ({ langMode }) => {
 
     const executeCode = async (inputPara: string, code: string, language: string, versionIndex: string) => {
         try {
-            const response = await axios.post("http://localhost:3005/execute", {
-                clientId: "8d0a8035f4efbeed23e2038f421d056f", // Add your client ID here
-                clientSecret: "795bf1f4c00bc37104f0acc0be428fcda070e672f8456ffb32894817ad29e53", // Add your client secret here
+            const response = await axios.post("https://realtime-code-editor-with-video.onrender.com/execute", {
+                clientId: process.env.CLIENT_ID!,
+                clientSecret: process.env.CLIENT_SECRET!,
                 script: code,
                 stdin: inputPara,
                 language,
@@ -90,7 +90,7 @@ const Terminal: React.FC<TerminalProps> = ({ langMode }) => {
                         />
                     </ResizablePanel>
                     <ResizableHandle withHandle />
-                    
+
                     {/* Output Panel */}
                     <ResizablePanel maxSize={100}>
                         <textarea
