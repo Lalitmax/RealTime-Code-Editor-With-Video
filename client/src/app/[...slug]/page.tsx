@@ -31,6 +31,14 @@ const Home = () => {
     setRightBarWidthCounter(size); // Set the percentage width
   }
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      socket.emit("ping");
+    }, 30000);
+
+    return () => clearInterval(interval);
+  }, []);
+
 
 
   useEffect(() => {

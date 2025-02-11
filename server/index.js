@@ -119,6 +119,11 @@ io.on("connection", (socket) => {
         }
     });
 
+    socket.on("ping", () => {
+        socket.emit("pong"); // Respond to keep the connection alive
+    });
+    
+
 
     // Handle disconnection
     socket.on("disconnect", () => {
