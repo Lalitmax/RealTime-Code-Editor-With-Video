@@ -58,8 +58,9 @@ const Terminal: React.FC<TerminalProps> = ({ langMode }) => {
 
         const inputCode = inputRef.current?.value || "";
         const storedCode = localStorage.getItem("chats") || "// No code found";
+        const getLangMode = localStorage.getItem('defaultLang') || 'Java';
 
-        const selectedLanguage = languageMap.get(langMode) || 'java';
+        const selectedLanguage = languageMap.get(getLangMode) || 'java';
         const selectedVersion = langVersionMap.get(langMode) || "3"; // Default version
 
         await executeCode(inputCode, storedCode, selectedLanguage, selectedVersion);

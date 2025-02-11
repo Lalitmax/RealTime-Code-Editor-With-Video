@@ -178,7 +178,7 @@ const TextEditor: React.FC<Props> = ({ setLangMode }) => {
                         editor.setValue(defaultLanguage?.defaultCode);
                         localStorage.setItem("chats", defaultLanguage?.defaultCode || "");
                         localStorage.setItem("defaultLang", lang.lang);
-                        setLangMode(lang.lang)
+                        // setLangMode(lang.lang)
                       }
                     }
                   }}
