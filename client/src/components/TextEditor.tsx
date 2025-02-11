@@ -144,6 +144,7 @@ const TextEditor: React.FC<Props> = ({ setLangMode }) => {
     const savedLang = localStorage.getItem("defaultLang"); // Retrieve saved language
     if (savedLang) {
       setSelectedLanguage(savedLang);
+      setLangMode(savedLang)
     }
   }, []);  
 
@@ -177,6 +178,7 @@ const TextEditor: React.FC<Props> = ({ setLangMode }) => {
                         editor.setValue(defaultLanguage?.defaultCode);
                         localStorage.setItem("chats", defaultLanguage?.defaultCode || "");
                         localStorage.setItem("defaultLang", lang.lang);
+                        setLangMode(lang.lang)
                       }
                     }
                   }}
