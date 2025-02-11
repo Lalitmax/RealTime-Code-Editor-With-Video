@@ -58,8 +58,6 @@ const Home = () => {
           <SideRightBar width={rightBarWidthCounter} />
         </div>
 
-
-
       </ResizablePanelGroup>
     </div >
   </>)

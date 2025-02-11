@@ -34,6 +34,7 @@ interface Props {
 
 
 const TextEditor: React.FC<Props> = ({ setLangMode }) => {
+
   const [clientId] = useState<string>(uuidv4());
   const editorRef = useRef<CodeMirror.Editor | null>(null);
   const [selectedLanguage, setSelectedLanguage] = useState("Java")
@@ -69,20 +70,6 @@ const TextEditor: React.FC<Props> = ({ setLangMode }) => {
     JavaScript: "javascript",
   };
 
-
-  useEffect(() => {
-    if (editorRef.current) {
-      const editor = editorRef.current
-      const defaultLanguage = languages.find((lang) => lang.lang === selectedLanguage)
-
-      if (defaultLanguage) {
-        editor.setValue(defaultLanguage.defaultCode)
-        editor.setOption("mode", modeMap[selectedLanguage] || "text/plain");
-        setLangMode(selectedLanguage)
-
-      }
-    }
-  }, [selectedLanguage])
 
   useEffect(() => {
 
@@ -169,8 +156,21 @@ const TextEditor: React.FC<Props> = ({ setLangMode }) => {
             </DropdownMenuTrigger>
             <DropdownMenuContent className="max-h-[400px] overflow-y-auto">
               {languages.map((lang) => (
-                <DropdownMenuItem key={lang.lang} onClick={() => setSelectedLanguage(lang.lang)} className="cursor-pointer">
-                  {lang.lang}
+                <DropdownMenuItem  key={lang.lang} onClick={() => {
+                  setSelectedLanguage(lang.lang)
+                  if (editorRef.current) {
+                    const editor = editorRef.current
+                    const defaultLanguage = languages.find((langPara) => langPara.lang === lang.lang)
+                    if (defaultLanguage)
+                      editor.setValue(defaultLanguage?.defaultCode)
+                  }
+                }
+
+                } className={`cursor-pointer ${
+                  selectedLanguage === lang.lang ? "bg-gray-200 font-bold" : ""
+                }`}
+              >
+                {lang.lang}
                 </DropdownMenuItem>
               ))}
             </DropdownMenuContent>

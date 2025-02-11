@@ -68,7 +68,7 @@ const Home = () => {
 
 
             <ResizableHandle withHandle />
-            <ResizablePanel defaultSize={0} minSize={6}  >
+            <ResizablePanel defaultSize={5} minSize={6}  >
               <Terminal langMode={langMode} ></Terminal>
             </ResizablePanel>
 
