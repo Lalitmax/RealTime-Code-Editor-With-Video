@@ -4,7 +4,7 @@
 
 **RealTime Code Editor With Video** is a collaborative platform that merges live code editing with video chat, allowing developers to code together in real-time while maintaining seamless communication. With features like multi-user support and syntax highlighting, this tool is perfect for pair programming, remote team collaboration, and coding interviews.
 
-[![RealTime Code Editor](https://github.com/user-attachments/assets/f1bee36e-ea35-42d7-8aca-4c1353dae4ca)](https://codemax-demo.vercel.app/)
+ <img width="1076" alt="codemax code test" src="https://github.com/user-attachments/assets/27c2499e-cf96-4994-b042-a7841802ce34" />
 
 ## Features
 
@@ -41,8 +41,15 @@ To configure your application with Agora and the backend, follow these steps:
 2. Add the following environment variables:
 
 ```env
-NEXT_PUBLIC_AGORA_APP_ID=random234fmdjd3ed3ed3wd  # Replace with your Agora App ID
+NEXT_PUBLIC_AGORA_APP_ID=your_agora_app_id_here
+NEXT_PUBLIC_CLIENT_ID=your_client_id_here
+NEXT_PUBLIC_CLIENT_SECRET=your_client_secret_here
 ```
+#### Explanation of Variables:
+1. PORT: Defines the port on which the server runs.
+2. NEXT_PUBLIC_AGORA_APP_ID: Your Agora App ID for real-time communication.
+3. NEXT_PUBLIC_CLIENT_ID: Your API client ID for executing code.
+4. NEXT_PUBLIC_CLIENT_SECRET: Your API client secret for authentication.
    
 ### Environment Variables for server
 To set up the server, you need to create an environment variable for the port:
