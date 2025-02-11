@@ -140,37 +140,50 @@ const TextEditor: React.FC<Props> = ({ setLangMode }) => {
     init();
   }, []);
 
+  useEffect(() => {
+    const savedLang = localStorage.getItem("defaultLang"); // Retrieve saved language
+    if (savedLang) {
+      setSelectedLanguage(savedLang);
+    }
+  }, []);  
+
   return (
     <>
       <div className="z-10 absolute pl-2 p-r-4 h-10 dark:border-gray-700 flex items-center justify-between rounded-t-md bg-[#f7f7f7] border-[1px] w-full">
         <div className="flex flex-wrap items-center divide-gray-200 sm:divide-x sm:rtl:divide-x-reverse dark:divide-gray-600">
           <FaCode className="text-gray-600 text-xl" />
-          <DropdownMenu >
-            <DropdownMenuTrigger className='flex gap-1 outline-none'>
-              <Button variant="outline" className="min-w-[60px]  border-gray-300 max-h-[35px] ml-8 bg-[#f7f7f7]">
+          <DropdownMenu>
+            <DropdownMenuTrigger className="flex gap-1 outline-none">
+              <Button
+                variant="outline"
+                className="min-w-[60px] border-gray-300 max-h-[35px] ml-8 bg-[#f7f7f7]"
+              >
                 {selectedLanguage}
-                <MdOutlineArrowDropDown className=' font-bold' />
-
+                <MdOutlineArrowDropDown className="font-bold" />
               </Button>
-
             </DropdownMenuTrigger>
             <DropdownMenuContent className="max-h-[400px] overflow-y-auto">
               {languages.map((lang) => (
-                <DropdownMenuItem  key={lang.lang} onClick={() => {
-                  setSelectedLanguage(lang.lang)
-                  if (editorRef.current) {
-                    const editor = editorRef.current
-                    const defaultLanguage = languages.find((langPara) => langPara.lang === lang.lang)
-                    if (defaultLanguage)
-                      editor.setValue(defaultLanguage?.defaultCode)
-                  }
-                }
-
-                } className={`cursor-pointer ${
-                  selectedLanguage === lang.lang ? "bg-gray-200 font-bold" : ""
-                }`}
-              >
-                {lang.lang}
+                <DropdownMenuItem
+                  key={lang.lang}
+                  onClick={() => {
+                    setSelectedLanguage(lang.lang);
+                    if (editorRef.current) {
+                      const editor = editorRef.current;
+                      const defaultLanguage = languages.find(
+                        (langPara) => langPara.lang === lang.lang
+                      );
+                      if (defaultLanguage) {
+                        editor.setValue(defaultLanguage?.defaultCode);
+                        localStorage.setItem("chats", defaultLanguage?.defaultCode || "");
+                        localStorage.setItem("defaultLang", lang.lang);
+                      }
+                    }
+                  }}
+                  className={`cursor-pointer ${selectedLanguage === lang.lang ? "bg-gray-200 font-bold" : ""
+                    }`}
+                >
+                  {lang.lang}
                 </DropdownMenuItem>
               ))}
             </DropdownMenuContent>
